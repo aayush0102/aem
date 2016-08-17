@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><components xmlns:scr="http://www.osgi.org/xmlns/scr/v1.0.0">
+    <scr:component enabled="true" name="CrxProj.CrxProj.impl.HelloServiceImpl">
+        <implementation class="CrxProj.CrxProj.impl.HelloServiceImpl"/>
+        <service servicefactory="false">
+            <provide interface="CrxProj.CrxProj.HelloService"/>
+        </service>
+        <property name="service.pid" value="CrxProj.CrxProj.impl.HelloServiceImpl"/>
+        <reference name="repository" interface="org.apache.sling.jcr.api.SlingRepository" cardinality="1..1" policy="static" bind="bindRepository" unbind="unbindRepository"/>
+    </scr:component>
+    <scr:component enabled="true" immediate="true" name="CrxProj.CrxProj.impl.filters.LoggingFilter">
+        <implementation class="CrxProj.CrxProj.impl.filters.LoggingFilter"/>
+        <service servicefactory="false">
+            <provide interface="javax.servlet.Filter"/>
+        </service>
+        <property name="service.ranking" type="Integer" value="-700"/>
+        <property name="sling.filter.scope" value="REQUEST"/>
+        <property name="service.pid" value="CrxProj.CrxProj.impl.filters.LoggingFilter"/>
+    </scr:component>
+    <scr:component enabled="true" name="CrxProj.CrxProj.CrxProjServlet">
+        <implementation class="CrxProj.CrxProj.CrxProjServlet"/>
+        <service servicefactory="false">
+            <provide interface="javax.servlet.Servlet"/>
+        </service>
+        <property name="sling.servlet.paths" value="/bin/myServlet"/>
+        <property name="sling.servlet.methods" value="POST"/>
+        <property name="service.pid" type="String" value="CrxProj.CrxProj.CrxProjServlet"/>
+        <property name="service.description" type="String" value="This servlet writes to CRX Repository"/>
+        <property name="service.vendor" type="String" value="Adobe Systems Incorporated - Adobe@Adobe Team"/>
+        <reference name="dsp" interface="com.day.commons.datasource.poolservice.DataSourcePool" cardinality="1..1" policy="static" bind="bindDsp" unbind="unbindDsp"/>
+        <reference name="resolverFactory" interface="org.apache.sling.api.resource.ResourceResolverFactory" cardinality="1..1" policy="static" bind="bindResolverFactory" unbind="unbindResolverFactory"/>
+    </scr:component>
+</components>
